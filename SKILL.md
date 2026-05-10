@@ -13,6 +13,9 @@ Use this skill as the domain layer for Danish official statistics. Use the Varro
 
 Do not duplicate Varro plugin instructions here. Load the relevant Varro skill when you need tool-specific details.
 
+If the workspace has not been configured for the hosted DST services yet, read
+[setup.md](setup.md), ask the user for the DST auth token, and run `dst-setup`.
+
 ## Data Layout
 
 Skill-relative paths:
@@ -78,21 +81,17 @@ Always let the data and table docs decide the method. Do not infer codes from la
 Use the CLI for exact filter values and fuzzy label search:
 
 ```bash
-cd varro_dst
 uv run dst-column-values befolk1 kon
 uv run dst-column-values nuts titel --for-table folk1a --q "kobenhavn" --n 10
 uv run dst-column-values regkc dranst1 --q "folkeskole" --json
 ```
 
-The CLI calls the hosted column-values API configured by `DST_COLUMN_VALUES_URL`, or by `--base-url`.
-For local development, run:
-
-```bash
-cd varro_dst
-uv run dst-column-values-api
-```
-
-By default the API listens on `http://127.0.0.1:8010` and reads column-value files from `DST_DOCS_DIR`, this skill folder, or the parent Varro repo.
+The CLI calls the hosted column-values API. By default it uses
+`https://varro.dk/dst` and reads auth from `DST_COLUMN_VALUES_TOKEN` or the
+workspace file written by `dst-setup` at `dashboards/.varro/dst.env`.
+Use the hosted API and hosted PostgreSQL database over the internet; do not
+start a local column-values API or configure the DST SQL connection to
+`localhost`.
 
 It mirrors the original Varro contract:
 

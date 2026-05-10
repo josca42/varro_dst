@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 
 import httpx
+
+from dst_skill.config import column_values_token, column_values_url
 
 
 def parse_args():
@@ -17,11 +18,7 @@ def parse_args():
     parser.add_argument("--q", "--query", dest="query")
     parser.add_argument("--n", type=int, default=5)
     parser.add_argument("--for-table")
-    parser.add_argument(
-        "--base-url",
-        default=os.environ.get("DST_COLUMN_VALUES_URL", "http://127.0.0.1:8010"),
-    )
-    parser.add_argument("--token", default=os.environ.get("DST_COLUMN_VALUES_TOKEN"))
+    parser.add_argument("--token", default=column_values_token())
     parser.add_argument("--json", action="store_true")
     return parser.parse_args()
 
@@ -42,12 +39,20 @@ def fetch_json(args):
         params["for_table"] = args.for_table
 
     response = httpx.get(
-        f"{args.base_url.rstrip('/')}/v1/column-values",
+        f"{column_values_url().rstrip('/')}/v1/column-values",
         params=params,
         headers=headers,
         timeout=30,
     )
-    response.raise_for_status()
+    try:
+        response.raise_for_status()
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code in {401, 403}:
+            raise SystemExit(
+                "Column-values authentication failed. Run dst-setup again or set "
+                "DST_COLUMN_VALUES_TOKEN."
+            ) from None
+        raise
     return response.json()
 
 

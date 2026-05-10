@@ -12,10 +12,4 @@ python3 scripts/sync_docs.py
 
 The skill depends on the Varro plugin for SQL, Jupyter, and dashboards. Keep this repo focused on Danmarks Statistik domain guidance, reference docs, geofiles, and the column-values CLI.
 
-Run the local column-values API with:
-
-```bash
-uv run dst-column-values-api
-```
-
-Set `DST_DOCS_DIR` if `docs/column_values` is not available in this skill folder or the parent Varro repo.
+For user workspaces, DST access is hosted-only. Codex should configure the Varro SQL connection for `varro.dk:5432` and use the column-values API at `https://varro.dk/dst` via `dst-setup`; do not document or suggest a local API/database path for normal use.
