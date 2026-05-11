@@ -8,7 +8,8 @@ from pathlib import Path
 import pandas as pd
 from rapidfuzz import process
 
-SKILL_ROOT = Path(__file__).resolve().parents[1]
+PLUGIN_ROOT = Path(__file__).resolve().parents[1]
+SKILL_ROOT = PLUGIN_ROOT / "skills" / "varro-dst"
 
 
 def normalize_table_name(table: str) -> str:
@@ -24,7 +25,8 @@ def docs_dir() -> Path:
     candidates = [
         Path(env).expanduser() if env else None,
         SKILL_ROOT / "docs",
-        SKILL_ROOT.parent / "agent_data",
+        PLUGIN_ROOT / "docs",
+        PLUGIN_ROOT.parent / "agent_data",
         Path.cwd() / "docs",
     ]
     for candidate in candidates:
@@ -38,7 +40,7 @@ def dimension_links_dir() -> Path:
     candidates = [
         Path(env).expanduser() if env else None,
         docs_dir() / "dimension_links",
-        SKILL_ROOT.parent / "data" / "dst" / "dimension_links",
+        PLUGIN_ROOT.parent / "data" / "dst" / "dimension_links",
         Path.cwd() / "data" / "dst" / "dimension_links",
     ]
     for candidate in candidates:

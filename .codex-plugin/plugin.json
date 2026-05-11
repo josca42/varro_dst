@@ -1,0 +1,28 @@
+{
+  "name": "varro-dst",
+  "version": "0.1.0",
+  "description": "Danmarks Statistik domain skill and setup helpers for Varro.",
+  "repository": "https://github.com/josca42/varro_dst",
+  "license": "MIT",
+  "keywords": [
+    "danmarks-statistik",
+    "dst",
+    "statbank",
+    "denmark",
+    "statistics",
+    "varro"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Varro DST",
+    "shortDescription": "Danish official statistics skill",
+    "longDescription": "Domain guidance, table documentation, setup helpers, and guardrails for analyzing Danmarks Statistik / StatBank data with Varro.",
+    "developerName": "josca42",
+    "category": "data analysis",
+    "capabilities": ["Read", "Write"],
+    "defaultPrompt": [
+      "Use Varro DST to analyze Danish official statistics from Danmarks Statistik.",
+      "Use Varro DST with Varro SQL, Jupyter, and dashboards."
+    ]
+  }
+}

@@ -7,8 +7,9 @@ import shutil
 from pathlib import Path
 
 
-SKILL_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = SKILL_ROOT.parent / "agent_data"
+PLUGIN_ROOT = Path(__file__).resolve().parents[1]
+SKILL_ROOT = PLUGIN_ROOT / "skills" / "varro-dst"
+DEFAULT_SOURCE = PLUGIN_ROOT.parent / "agent_data"
 DEST = SKILL_ROOT / "docs"
 COPIED_DIRS = ("subjects", "fact", "dim", "geo")
 

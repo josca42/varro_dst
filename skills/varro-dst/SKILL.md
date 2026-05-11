@@ -13,6 +13,9 @@ Use this skill as the domain layer for Danish official statistics. Use the Varro
 
 Do not duplicate Varro plugin instructions here. Load the relevant Varro skill when you need tool-specific details.
 
+This skill depends on the Varro plugin. Install and enable both `varro` and
+`varro-dst` from the Varro Plugins marketplace.
+
 If the workspace has not been configured for the hosted DST services yet, read
 [setup.md](setup.md), ask the user for the DST auth token, and run `dst-setup`.
 

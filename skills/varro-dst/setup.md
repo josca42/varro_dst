@@ -18,7 +18,7 @@ PostgreSQL on `varro.dk:5432` and the column-values API at
 ## Procedure
 
 1. Ask the user for the DST auth token.
-2. From the user's project workspace, run the skill setup helper:
+2. From the user's project workspace, run the skill setup helper using the Varro DST plugin or repo root as the `--project` path:
 
 ```bash
 uv run --project /path/to/varro_dst dst-setup
