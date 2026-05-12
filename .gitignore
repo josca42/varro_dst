@@ -1,6 +1,6 @@
+.DS_Store
 .env
 .venv/
 docs/column_values/
-skills/varro-dst/docs/column_values/
 __pycache__/
 *.pyc

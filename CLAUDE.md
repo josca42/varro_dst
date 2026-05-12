@@ -1,3 +1,3 @@
 # Varro DST Skill
 
-Read `AGENTS.md` and `skills/varro-dst/SKILL.md`.
+Read `AGENTS.md` and `skills/dst/SKILL.md`.

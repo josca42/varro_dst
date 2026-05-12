@@ -9,7 +9,6 @@ import pandas as pd
 from rapidfuzz import process
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
-SKILL_ROOT = PLUGIN_ROOT / "skills" / "varro-dst"
 
 
 def normalize_table_name(table: str) -> str:
@@ -24,7 +23,6 @@ def docs_dir() -> Path:
     env = os.environ.get("DST_DOCS_DIR")
     candidates = [
         Path(env).expanduser() if env else None,
-        SKILL_ROOT / "docs",
         PLUGIN_ROOT / "docs",
         PLUGIN_ROOT.parent / "agent_data",
         Path.cwd() / "docs",
@@ -32,7 +30,7 @@ def docs_dir() -> Path:
     for candidate in candidates:
         if candidate and (candidate / "column_values").exists():
             return candidate.resolve()
-    return (SKILL_ROOT / "docs").resolve()
+    return (PLUGIN_ROOT / "docs").resolve()
 
 
 def dimension_links_dir() -> Path:

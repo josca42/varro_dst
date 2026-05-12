@@ -1,8 +1,8 @@
 # Varro DST Skill
 
-Read `skills/varro-dst/SKILL.md` first.
+Read `skills/dst/SKILL.md` first.
 
-`skills/varro-dst/docs/subjects`, `skills/varro-dst/docs/fact`, `skills/varro-dst/docs/dim`, `skills/varro-dst/docs/geo`, `skills/varro-dst/docs/subject_hierarchy.md`, and `skills/varro-dst/docs/table_index.jsonl` are generated from the Varro repo's root `agent_data/`.
+`docs/subjects`, `docs/fact`, `docs/dim`, `docs/geo`, `docs/subjects/index.md`, and `docs/geo/index.md` are generated from the Varro repo's root `agent_data/`.
 
 Do not hand-edit generated `docs` files. Update the source data or run:
 

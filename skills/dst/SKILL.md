@@ -1,5 +1,5 @@
 ---
-name: varro-dst
+name: dst
 description: Use when analyzing Danish official statistics from Danmarks Statistik or StatBank, especially with the Varro plugin SQL/Jupyter/dashboard tools. Provides the Rigsstatistiker workflow, table documentation navigation, safe SQL filter lookup via dst-column-values, geography files, and guardrails for fact/dim tables about Denmark.
 ---
 
@@ -21,16 +21,21 @@ If the workspace has not been configured for the hosted DST services yet, read
 
 ## Data Layout
 
-Skill-relative paths:
+Plugin-root paths. The `docs/` directory is next to `skills/`, not inside this
+skill folder:
 
 ```text
 docs/
-├── subject_hierarchy.md     # compact root -> mid overview
-├── table_index.jsonl        # searchable fact, dim, subject index
-├── subjects/                # leaf subject overviews
-├── fact/                    # one markdown doc per fact table
-├── dim/                     # dimension table docs
-└── geo/                     # GeoParquet boundaries for maps
+├── subjects/          # Subject-level overviews (one .md per leaf subject)
+│   ├── index.md       # Compact root -> mid overview
+│   └── {root}/{mid}/{leaf}.md
+├── fact/              # Per-table docs for fact tables
+│   └── {root}/{mid}/{leaf}/{table_id}.md
+├── dim/               # Dimension table docs
+│   └── {table_id}.md
+└── geo/               # GeoParquet boundary files for map visualizations
+    ├── index.md
+    └── {admin_region}.parquet
 ```
 
 **subjects/** — Each leaf `.md` file lists all fact tables in that subject: linked dimension tables, table IDs, descriptions, columns, and time ranges. Use these to discover which tables are relevant for a topic.
@@ -39,9 +44,11 @@ docs/
 
 **dim/** — Dimension table docs. Describes hierarchy levels, kode/niveau/titel structure, and example values.
 
-**geo/** — Simplified GeoParquet boundary files for Danish administrative regions (kommuner, regioner, landsdele). Each file is indexed by `dim_kode` matching `dim.nuts.kode`. Read `docs/geo_index.md` before creating map visualizations.
+**geo/** — Simplified GeoParquet boundary files for Danish administrative regions (kommuner, regioner, landsdele). Each file is indexed by `dim_kode` matching `dim.nuts.kode`. Read `docs/geo/index.md` before creating map visualizations.
 
-**Subject hierarchy:** Tables are organized into a 3-level tree: `root → mid → leaf → fact tables`. A compact overview of roots and mids is provided in `docs/subject_hierarchy.md`. To discover leaves within a mid, use `Bash("ls docs/subjects/{root}/{mid}/")`.
+**Subject hierarchy:** Tables are organized into a 3-level tree: `root → mid → leaf → fact tables`. A compact overview of roots and mids is provided in `docs/subjects/index.md`. To discover leaves within a mid, use `Bash("ls docs/subjects/{root}/{mid}/")`.
+
+IMPORTANT: Find the correct table by reading docs/subjects/index.md and then read the most likely leaf subject markdown file and from there read relevant fact tables and dim tables markdown files.
 
 <database_schema>
 Data is stored in PostgreSQL with two schemas:
