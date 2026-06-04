@@ -11,15 +11,11 @@ DEFAULT_DB_NAME = "dst"
 DEFAULT_DB_USER = "dstread"
 
 
-def dashboards_dir(project_dir: Path | None = None) -> Path:
-    env = os.environ.get("VARRO_DASHBOARDS_DIR")
-    if env:
-        return Path(env).expanduser().resolve()
-    return ((project_dir or Path.cwd()) / "dashboards").resolve()
-
-
 def varro_config_dir(project_dir: Path | None = None) -> Path:
-    return dashboards_dir(project_dir) / ".varro"
+    root = project_dir
+    if root is None and os.environ.get("VARRO_PROJECT_DIR"):
+        root = Path(os.environ["VARRO_PROJECT_DIR"]).expanduser()
+    return (root or Path.cwd()).resolve() / ".varro"
 
 
 def _ancestor_dirs(start: Path | None = None):
@@ -32,12 +28,10 @@ def _ancestor_dirs(start: Path | None = None):
 
 def workspace_config_candidates(start: Path | None = None) -> list[Path]:
     candidates: list[Path] = []
-    env_dashboards_dir = os.environ.get("VARRO_DASHBOARDS_DIR")
-    if env_dashboards_dir:
-        candidates.append(Path(env_dashboards_dir).expanduser() / ".varro" / "dst.env")
+    if os.environ.get("VARRO_PROJECT_DIR"):
+        candidates.append(varro_config_dir() / "dst.env")
 
     for root in _ancestor_dirs(start):
-        candidates.append(root / "dashboards" / ".varro" / "dst.env")
         candidates.append(root / ".varro" / "dst.env")
 
     seen: set[Path] = set()

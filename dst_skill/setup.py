@@ -10,8 +10,8 @@ from dst_skill.config import (
     DEFAULT_DB_NAME,
     DEFAULT_DB_PORT,
     DEFAULT_DB_USER,
-    dashboards_dir,
     sqlalchemy_url,
+    varro_config_dir,
 )
 
 
@@ -22,7 +22,6 @@ def parse_args():
     )
     parser.add_argument("--token", help="DST auth token. Prompts securely if omitted.")
     parser.add_argument("--project-dir", type=Path, default=Path.cwd())
-    parser.add_argument("--dashboards-dir", type=Path)
     parser.add_argument("--no-gitignore", action="store_true")
     return parser.parse_args()
 
@@ -33,14 +32,9 @@ def _write_secret(path: Path, content: str) -> None:
     path.chmod(0o600)
 
 
-def _add_gitignore(project_dir: Path, dashboards: Path) -> None:
+def _add_gitignore(project_dir: Path) -> None:
     gitignore = project_dir / ".gitignore"
-    try:
-        rel_path = dashboards.relative_to(project_dir).as_posix()
-    except ValueError:
-        return
-
-    line = f"{rel_path}/.varro/"
+    line = ".varro/"
     existing = gitignore.read_text().splitlines() if gitignore.exists() else []
     if line not in existing:
         existing.append(line)
@@ -50,12 +44,7 @@ def _add_gitignore(project_dir: Path, dashboards: Path) -> None:
 def main():
     args = parse_args()
     project_dir = args.project_dir.expanduser().resolve()
-    dashboards = (
-        args.dashboards_dir.expanduser().resolve()
-        if args.dashboards_dir
-        else dashboards_dir(project_dir)
-    )
-    config_dir = dashboards / ".varro"
+    config_dir = varro_config_dir(project_dir)
 
     token = args.token or getpass.getpass("DST auth token: ")
     if not token:
@@ -83,7 +72,7 @@ def main():
     config_dir.chmod(0o700)
 
     if not args.no_gitignore:
-        _add_gitignore(project_dir, dashboards)
+        _add_gitignore(project_dir)
 
     print(f"Wrote {config_dir / 'sql_connection.txt'}")
     print(f"Wrote {config_dir / 'dst.env'}")

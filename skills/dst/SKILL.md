@@ -98,7 +98,7 @@ uv run dst-column-values regkc dranst1 --q "folkeskole" --json
 
 The CLI calls the hosted column-values API. By default it uses
 `https://varro.dk/dst` and reads auth from `DST_COLUMN_VALUES_TOKEN` or the
-workspace file written by `dst-setup` at `dashboards/.varro/dst.env`.
+workspace file written by `dst-setup` at `.varro/dst.env`.
 Use the hosted API and hosted PostgreSQL database over the internet; do not
 start a local column-values API or configure the DST SQL connection to
 `localhost`.

@@ -33,12 +33,11 @@ uv run --project /path/to/varro_dst dst-setup --token "$DST_AUTH_TOKEN"
 The helper writes:
 
 ```text
-dashboards/.varro/sql_connection.txt  # Varro SQL MCP connection string
-dashboards/.varro/dst.env             # column-values API URL and token
+.varro/sql_connection.txt  # Varro SQL MCP connection string
+.varro/dst.env             # column-values API URL and token
 ```
 
-It also adds `dashboards/.varro/` to `.gitignore` when the dashboards directory
-is inside the workspace.
+It also adds `.varro/` to `.gitignore`.
 
 ## Verify
 
@@ -62,8 +61,6 @@ select count(*) as rows from fact.befolk1;
 
 ## Notes
 
-- Never commit files under `dashboards/.varro/`.
-- If the user has a non-default dashboard location, set `VARRO_DASHBOARDS_DIR`
-  before running `dst-setup`, or pass `--dashboards-dir`.
+- Never commit files under `.varro/`.
 - The CLI reads `DST_COLUMN_VALUES_TOKEN` or the workspace config file written
   by `dst-setup`.
