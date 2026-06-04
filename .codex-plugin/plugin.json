@@ -2,6 +2,9 @@
   "name": "varro-dst",
   "version": "0.1.0",
   "description": "Danmarks Statistik domain skill and setup helpers for Varro.",
+  "author": {
+    "name": "josca42"
+  },
   "repository": "https://github.com/josca42/varro_dst",
   "license": "MIT",
   "keywords": [
