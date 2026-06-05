@@ -88,17 +88,22 @@ Always let the data and table docs decide the method. Do not infer codes from la
 
 ## Column Values
 
-Use the CLI for exact filter values and fuzzy label search:
+Use the CLI for exact filter values and fuzzy label search. From a user
+workspace, run it with the Varro DST plugin or repo root as the `--project`
+path so `uv` can find the `dst-column-values` console script:
 
 ```bash
-uv run dst-column-values befolk1 kon
-uv run dst-column-values nuts titel --for-table folk1a --q "kobenhavn" --n 10
-uv run dst-column-values regkc dranst1 --q "folkeskole" --json
+uv run --project /path/to/varro_dst dst-column-values befolk1 kon
+uv run --project /path/to/varro_dst dst-column-values nuts titel --for-table folk1a --q "kobenhavn" --n 10
+uv run --project /path/to/varro_dst dst-column-values regkc dranst1 --q "folkeskole" --json
 ```
 
-The CLI calls the hosted column-values API. By default it uses
-`https://varro.dk/dst` and reads auth from `DST_COLUMN_VALUES_TOKEN` or the
-workspace file written by `dst-setup` at `.varro/dst.env`.
+The short form `uv run dst-column-values ...` only works when
+`dst-column-values` is already installed in the active workspace environment;
+do not assume it is available. The CLI calls the hosted column-values API. By
+default it uses `https://varro.dk/dst` and reads auth from
+`DST_COLUMN_VALUES_TOKEN` or the workspace file written by `dst-setup` at
+`.varro/dst.env`.
 Use the hosted API and hosted PostgreSQL database over the internet; do not
 start a local column-values API or configure the DST SQL connection to
 `localhost`.
